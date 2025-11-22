@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Bánh Kem 3 Tầng - Ngọn Nến 45</title>
+  <style>
+    :root{
+      --bg:#fff7f2;
+      --plate:#f3e9e3;
+      --tier1:#ff9aa2; /* top */
+      --tier2:#ffd3b6; /* middle */
+      --tier3:#c1e1c1; /* bottom */
+      --icing:#ffffff;
+      --shadow: rgba(0,0,0,0.12);
+    }
+    *{box-sizing:border-box}
+    body{margin:0; min-height:100vh; display:flex; align-items:center; justify-content:center; background:linear-gradient(180deg,var(--bg), #ffece6); font-family:Inter, system-ui, Arial}
+    .scene{width:100%; max-width:900px; padding:32px; text-align:center}
+    h1{margin:0 0 14px; color:#6b2b2b}
+    .cake-wrap{position:relative; margin:90px auto 12px; width:420px; height:420px}
+
+    /* plate */
+    .plate{position:absolute; left:50%; transform:translateX(-50%); bottom:10px; width:520px; height:40px; background:var(--plate); border-radius:40px; box-shadow:0 10px 30px var(--shadow);}
+    .plate:after{content:''; position:absolute; left:20px; right:20px; top:8px; height:6px; background:linear-gradient(90deg, rgba(0,0,0,0.02), rgba(0,0,0,0.05)); border-radius:6px}
+
+    /* tiers */
+    .tier{position:absolute; left:50%; transform:translateX(-50%); border-radius:18px; box-shadow:0 8px 20px var(--shadow); display:flex; align-items:center; justify-content:center}
+    .tier .icing{position:absolute; top:-18px; left:6%; right:6%; height:36px; border-top-left-radius:36px; border-top-right-radius:36px; border-bottom-left-radius:24px; border-bottom-right-radius:24px; background:var(--icing); box-shadow: inset 0 -6px rgba(0,0,0,0.03)}
+
+    /* sizes for three tiers */
+    .tier.bottom{bottom:80px; width:360px; height:120px; background:var(--tier3)}
+    .tier.middle{bottom:190px; width:290px; height:100px; background:var(--tier2)}
+    .tier.top{bottom:290px; width:210px; height:80px; background:var(--tier1)}
+
+    /* decorations */
+    .sprinkles{position:absolute; inset:0; pointer-events:none}
+    .sprinkle{width:10px; height:4px; border-radius:6px; transform:rotate(25deg); position:absolute; opacity:0.95}
+
+    /* candle */
+    .candle{position:absolute; left:50%; transform:translateX(-50%); bottom:370px; display:flex; align-items:center; justify-content:center; flex-direction:column}
+    .candle-stick{width:16px; height:70px; background:linear-gradient(180deg,#fff,#ffe6e6); border-radius:6px; box-shadow:0 6px 12px rgba(0,0,0,0.12)}
+    .flame{width:22px; height:32px; border-radius:50% 50% 40% 40%; background: radial-gradient(circle at 40% 30%, #fff2a8 10%, #ffd166 25%, #ff6b35 65%); position:relative; margin-bottom:6px; filter:drop-shadow(0 6px 6px rgba(255,120,0,0.2)); animation:flicker 1.2s infinite}
+    .flame:before{content:''; position:absolute; left:50%; top:46%; transform:translate(-50%,-50%); width:10px; height:14px; border-radius:50%; background: radial-gradient(circle at 40% 30%, #fff9d6 10%, #ffb84d 30%, #ff3d00 80%); opacity:0.95}
+
+    @keyframes flicker{
+      0%{transform:translateY(0) scale(1)}
+      50%{transform:translateY(-2px) scale(1.02)}
+      100%{transform:translateY(0) scale(1)}
+    }
+
+    .candles-shadow{position:absolute; left:50%; transform:translateX(-50%); bottom:358px; width:260px; height:8px; background:linear-gradient(180deg, rgba(0,0,0,0.08), rgba(0,0,0,0)); border-radius:50%}
+
+    .confetti{position:absolute; inset:0; pointer-events:none}
+    .btns{margin-top:18px}
+    button{background:#6b2b2b; color:#fff; border:0; padding:10px 14px; border-radius:10px; cursor:pointer; font-weight:600}
+
+    /* popup lời chúc */
+    .popup-wish{
+      position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5);
+      display:flex; align-items:center; justify-content:center; z-index:9999;
+      display:none;
+    }
+    .popup-wish-content{
+      background:#fff; padding:24px; border-radius:16px; text-align:center; max-width:80%; position:relative;
+      box-shadow:0 8px 30px rgba(0,0,0,0.3);
+      font-size:20px; color:#6b2b2b;
+    }
+    .popup-wish-content button{
+      position:absolute; top:8px; right:8px; background:none; border:none; color:#000;
+      font-size:24px; cursor:pointer;
+    }
+
+    @media (max-width:520px){
+      .cake-wrap{width:300px;height:320px}.plate{width:380px}.tier.bottom{width:280px;height:90px}.tier.middle{width:230px;height:76px;bottom:155px}.tier.top{width:170px;height:64px;bottom:235px}.candle{bottom:310px}
+    }
+  </style>
+</head>
+<body>
+  <div class="scene">
+    <h1>Chúc mừng sinh nhật mẹ Nga yêu dấu của con 🎂<br></h1>
+
+    <div class="cake-wrap" id="cake">
+      <div class="plate" aria-hidden></div>
+
+      <div class="tier bottom" id="tier3">
+        <div class="icing"></div>
+        <div class="sprinkles" id="spr3"></div>
+      </div>
+
+      <div class="tier middle" id="tier2">
+        <div class="icing"></div>
+        <div class="sprinkles" id="spr2"></div>
+      </div>
+
+      <div class="tier top" id="tier1">
+        <div class="icing"></div>
+        <div class="sprinkles" id="spr1"></div>
+      </div>
+
+      <div class="candle" id="candle">
+        <div class="flame" id="flame"></div>
+        <div class="candle-stick"></div>
+      </div>
+      <div class="candles-shadow"></div>
+
+      <canvas class="confetti" id="confettiCanvas"></canvas>
+    </div>
+
+    <div class="btns">
+      <button id="blowBtn">Thổi nến đi mẹ</button>
+    </div>
+  </div>
+
+  <!-- popup lời chúc -->
+  <div class="popup-wish" id="wishPopup">
+    <div class="popup-wish-content">
+      <button id="closePopup">&times;</button>
+      <div id="wishText">Nhân ngày sinh nhật mẹ con chúc mẹ tuổi 45 ngày ngày càng mạnh khỏe càng xinh đẹp ❤️</div>
+    </div>
+  </div>
+
+  <script>
+    // tạo rải sprinkles
+    function makeSprinkles(containerId, colors, count){
+      const cont = document.getElementById(containerId);
+      cont.innerHTML = '';
+      for(let i=0;i<count;i++){
+        const s = document.createElement('i');
+        s.className='sprinkle';
+        const w = 6 + Math.random()*14;
+        s.style.width = w+'px';
+        s.style.height = Math.max(3, w*0.36)+'px';
+        s.style.left = (5 + Math.random()*90) + '%';
+        s.style.top = (10 + Math.random()*60) + '%';
+        s.style.background = colors[Math.floor(Math.random()*colors.length)];
+        s.style.transform = 'rotate('+(Math.random()*60-30)+'deg)';
+        cont.appendChild(s);
+      }
+    }
+
+    makeSprinkles('spr1', ['#fff','#ffdede','#ffe28a'], 12);
+    makeSprinkles('spr2', ['#fff','#ff9aa2','#ffd3b6','#9ed2a8'], 18);
+    makeSprinkles('spr3', ['#fff','#c6f5c6','#ffefcc','#ffb3b8'], 22);
+
+    // toggle candle (blow)
+    const flame = document.getElementById('flame');
+    const btn = document.getElementById('blowBtn');
+    let lit = true;
+    const wishPopup = document.getElementById('wishPopup');
+    const closePopup = document.getElementById('closePopup');
+
+    function setLit(v){
+      lit = v;
+      if(lit){
+        flame.style.opacity = 1; flame.style.transform = '';
+        btn.textContent='Thổi nến đi mẹ';
+      } else {
+        flame.style.opacity = 0; flame.style.transform = 'scaleY(0.4) translateY(6px)';
+        btn.textContent='Đã thổi nến!';
+        startConfetti();
+        wishPopup.style.display = 'flex'; // hiện popup
+      }
+    }
+
+    btn.addEventListener('click', ()=> setLit(!lit));
+    closePopup.addEventListener('click', ()=> wishPopup.style.display = 'none');
+
+    // confetti
+    const canvas = document.getElementById('confettiCanvas');
+    const ctx = canvas.getContext('2d');
+    let confetti = [];
+    function resize(){ canvas.width = document.querySelector('.cake-wrap').clientWidth; canvas.height = document.querySelector('.cake-wrap').clientHeight; }
+    window.addEventListener('resize', resize); resize();
+
+    function startConfetti(){
+      confetti = [];
+      const n=60;
+      for(let i=0;i<n;i++){
+        confetti.push({
+          x: canvas.width/2 + (Math.random()*260-130),
+          y: 0,
+          vx: (Math.random()*2-1)*1.5,
+          vy: 2+Math.random()*3,
+          r: 4+Math.random()*6,
+          col: ['#ff6b6b','#ffd166','#9ad3bc','#f6a5c0'][Math.floor(Math.random()*4)],
+          rot: Math.random()*360,
+          vr: (Math.random()*4-2)
+        });
+      }
+      function loop(){
+        ctx.clearRect(0,0,canvas.width,canvas.height);
+        confetti.forEach((p)=>{
+          p.x += p.vx; p.y += p.vy; p.vy += 0.06;
+          p.rot += p.vr;
+          ctx.save(); ctx.translate(p.x,p.y); ctx.rotate(p.rot*Math.PI/180);
+          ctx.fillStyle=p.col; ctx.fillRect(-p.r/2, -p.r/2, p.r, p.r*0.6);
+          ctx.restore();
+        });
+        confetti = confetti.filter(p=>p.y < canvas.height+40);
+        if(confetti.length) requestAnimationFrame(loop);
+      }
+      loop();
+    }
+
+    // initial
+    setLit(true);
+  </script>
+</body>
+</html>
